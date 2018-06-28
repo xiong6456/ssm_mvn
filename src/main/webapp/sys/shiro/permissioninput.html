@@ -1,0 +1,65 @@
+<script type="text/javascript" src="../common/js/pubfun.js"></script>
+<script type="text/javascript" src="../sys/shiro/permissioninput.js"></script>
+<div class="easyui-layout" data-options="fit:true">
+    <!-- Begin of toolbar -->
+    <div id="permission-toolbar-inp">
+        <div class="zero-toolbar-button">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="openAddPerm()" plain="true">添加</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openEditPerm()" plain="true">修改</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-cross" onclick="removePerm()" plain="true">删除</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-reload" onclick="reloadPerm()" plain="true">刷新</a>
+        </div>
+        <form name="searchform" method="post" id ="searchform">
+		    <td style="width:30px;">
+		       <label>权限名：</label>
+		    	<input type="text" id="fdNameBox" name="fdName" class="easyui-textbox"
+                		data-options="prompt:'请输入权限名'" style="width:100px" />
+	            &nbsp;&nbsp;
+	            <label>描述：</label>
+	            <input class="easyui-textbox" id="fdDescriptionBox" name="fdDescriptionName" style="width:100px"
+	            		data-options="prompt:'请权限描述'"/>
+	            	<a id="submit_search" href="#" class="easyui-linkbutton" iconCls="icon-search">查询</a>
+			 </td>
+		 </form>
+    </div>
+    <!-- End of toolbar -->
+    <table id="permission-datagrid-inp" class="easyui-datagrid" toolbar="#permission-toolbar-inp"></table>
+</div>
+<!-- Begin of easyui-dialog -->
+<div id="permission-dialog-inp" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
+	<form id="permission-form-inp" method="post">
+        <table>
+        	<tr style="display:none">
+                <td align="right">权限ID:</td>
+                <td><input type="text" id="fdId" name="fdId"/></td>
+            </tr>
+            <tr>
+                <td align="right">权限编码:</td>
+                <td><input type="text" id="fdPercode" name="fdPercode" class="zero-text" style="height:23px" /></td>
+            </tr>
+            <tr>
+                <td align="right">权限名:</td>
+                <td><input type="text" id="fdName" name="fdName" class="zero-text" style="height:23px" /></td>
+            </tr>
+            <tr>
+                <td align="right">权限类型:</td>
+                <td>
+                	<select id="fdType" class="easyui-combobox" name="fdType" style="height:23px;width:260px;">   
+					    <option value="1">菜单</option>   
+					    <option value="2">按钮</option>   
+					    <option value="3">链接</option>   
+					</select> 
+                </td>
+            </tr>
+            <tr>
+                <td align="right">权限链接:</td>
+                <td><input type="text" id="fdUrl" name="fdUrl" class="zero-text" style="height:23px" /></td>
+            </tr>
+            <tr>
+                <td align="right">权限描述:</td>
+                <td><input type="text" id="fdDescription" name="fdDescription" class="zero-text" style="height:23px" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- End of easyui-dialog -->

@@ -1,0 +1,39 @@
+<script type="text/javascript" src="../common/js/pubfun.js"></script>
+<h2>密码重置</h2>
+<div style="margin:20px 0;"></div>
+<form action="" id="pswReset">
+<div class="easyui-panel" style="width:400px;padding:50px 60px">
+	<div style="margin-bottom:20px">
+		<input class="easyui-textbox" id="fdLoginName" name="fdLoginName"
+			prompt="请输入用户名" iconWidth="28" required="true"
+			style="width:100%;height:34px;padding:10px;">
+	</div>
+	<div style="margin-bottom:20px;">
+		<a href="#" onclick="pswReset();" class="easyui-linkbutton"
+			style="width:80px;align:center">重置密码</a>
+	</div>
+</div>
+</form>
+<script type="text/javascript">
+	var contextPath = getContextPath();
+
+	function pswReset() {
+		$('#pswReset').form('submit', {
+			type : "post",
+			url : contextPath + '/user/pswReset?' + $(this).serialize(),
+			onSubmit : function() {
+				return $(this).form('validate');
+			},
+			success : function(data) {
+				var tData = eval('(' + data + ')');
+				var flag = tData.flag;
+				if (flag == 'success') {
+					$('#pswReset').form("clear");
+					$.messager.alert('信息提示', tData.msg, 'info');
+				} else {
+					$.messager.alert('错误提示', tData.msg, 'error');
+				}
+			}
+		});
+	}
+</script>

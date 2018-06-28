@@ -1,0 +1,58 @@
+<script type="text/javascript" src="../common/js/pubfun.js"></script>
+<script type="text/javascript" src="../zero/customer/customer.js"></script>
+<div class="easyui-layout" data-options="fit:true">
+ 	<!-- Begin of toolbar -->
+    <div id="customer-toolbar-inp">
+        <div class="zero-toolbar-button">
+         	<a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openEditCustomer()" plain="true">修改</a>
+         	<a href="#" class="easyui-linkbutton" iconCls="icon-reload" onclick="reloadCustomer()" plain="true">刷新</a>
+        </div>
+        <form name="searchform" method="post" id ="customer_searchform">
+		    <td height="30">
+		       <label>肌肤问题：</label><input type="text" id="fdStatusBox" name="fdSkinProblem" class="easyui-combotree"
+                		data-options="url:contextPath+'/sysCode/select?codeType=skintype'" style="width:160px" />
+               <label>客户状态：</label><input type="text" id="fdSkinBox" name="fdStatus" class="easyui-combotree"
+                		data-options="url:contextPath+'/sysCode/select?codeType=statustype'" style="width:160px" />
+	            &nbsp;&nbsp;
+	            <label>姓 名：</label>
+	            <input class="easyui-textbox" id="fdNameBox" name="fdName" style="width:100px"
+	            		data-options="prompt:'请输入姓名',events:'{blur:selectBox}'"/>
+	            <label>电 话：</label>
+	            <input class="easyui-textbox" id="fdPhoneBox" name="fdPhone" style="width:100px"
+	            		data-options="prompt:'请输入电话',events:'{blur:selectBox}'"/>
+	            <label>QQ：</label>
+	            <input class="easyui-textbox" id="fdQQBox" name="fdQq" style="width:100px"
+	            		data-options="prompt:'请输入QQ',events:'{blur:selectBox}'"/>
+	            <label>微 信：</label>
+	            <input class="easyui-textbox" id="fdWechatBox" name="fdWechat" style="width:100px"
+	            		data-options="prompt:'请输入微信',events:'{blur:selectBox}'"/>
+	            	<a id="customer_search" href="#" class="easyui-linkbutton" onclick="selectsubmit()" iconCls="icon-search">查询</a>
+		    </td>
+		 </form>
+    </div>
+    <!-- End of toolbar -->
+ 	<table id="customer-datagrid-inp" class="easyui-datagrid" toolbar="#customer-toolbar-inp"></table>
+</div>  
+
+<!-- Begin of easyui-dialog -->
+<div id="customer-dialog-inp" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
+	<form id="customer-form-inp" method="post">
+        <table>
+        	<tr style="display:none">
+                <td align="right">部门ID:</td>
+                <td><input type="text" id="fdId" name="fdId"/></td>
+            </tr>
+            <tr>
+                <td align="right">状态:</td>
+                <td><input type="text" id="fdStatus" name="fdStatus" style="width:260px;height:23px" class="easyui-combobox" 
+                		 data-options="valueField:'id',textField:'text',url:contextPath+'/sysCode/select?codeType=statustype'"/></td>
+            </tr>
+             <tr>
+                <td align="right">肌肤问题:</td>
+                <td><input type="text" id="fdSkinProblem" name="fdSkinProblem" style="width:260px;height:23px" class="easyui-combobox" 
+                		 data-options="valueField:'id',textField:'text',url:contextPath+'/sysCode/select?codeType=skintype'"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- End of easyui-dialog -->

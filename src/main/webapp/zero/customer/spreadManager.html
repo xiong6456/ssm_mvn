@@ -1,0 +1,141 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>我的推广</title>
+<script type="text/javascript" src="../../common/js/pubfun.js"></script>
+<link rel="stylesheet" type="text/css" href="../../resource/jquery-easyui-1.5.4.2/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../../resource/jquery-easyui-1.5.4.2/themes/icon.css" />
+<script type="text/javascript" src="../../resource/jquery-easyui-1.5.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="../../resource/jquery-easyui-1.5.4.2/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="../../resource/jquery-easyui-1.5.4.2/locale/easyui-lang-zh_CN.js"></script>
+<style type="text/css">
+</style>
+</head>
+<body>
+	<div id="toolbar-inp">
+		<form name="searchform" method="post" id ="searchform">
+			  <td style="width:30px;">
+			    <label>开始日期：</label>
+			    <input id="fdStartTimeBox" name="fdStartTime" type="text" class="easyui-datebox"></input> 
+			    &nbsp;&nbsp;
+			    <label>结束日期：</label>
+			    <input id="fdEndTimeBox" name="fdEndTime" type="text" class="easyui-datebox"></input> 
+			    &nbsp;&nbsp;
+			    <label>客户状态：</label><input type="text" id="fdStatusCodeBox" name="fdStatusCode" class="easyui-combobox"
+	                		data-options="valueField:'id',textField:'text',url:getContextPath()+'/sysCode/select?codeType=statustype'" style="width:160px" />
+	            &nbsp;&nbsp;
+	            <label>姓 名：</label>
+	            <input class="easyui-textbox" id="fdNameBox" name="fdName" style="width:100px"
+	            		data-options="prompt:'请输入姓名',events:'{blur:selectBox}'"/>
+	            <a id="submit_search" href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="selectBox();">查询</a>
+			  </td>
+		</form>
+	</div>
+	<div class="easyui-layout" data-options="fit:true">
+		<table id="spread-datagrid-inp" class="easyui-datagrid" toolbar="#toolbar-inp">
+			<thead>
+				<tr>
+					<th data-options="field:'fdId',checkbox:true"></th>
+					<th data-options="field:'fdName',width:100">姓名</th>
+					<th data-options="field:'fdSex',width:100">性别</th>
+					<th data-options="field:'fdPhone',width:100">电话</th>
+					<th data-options="field:'fdQq',width:100">QQ</th>
+					<th data-options="field:'fdWechat',width:100">微信</th>
+					<th data-options="field:'fdArea',width:100">地区</th>
+					<th data-options="field:'fdStatusCode',width:100">状态</th>
+					<th data-options="field:'fdIsAvailable',width:100">是否可用</th>
+					<th data-options="field:'fdSource',width:100">来源</th>
+					<th data-options="field:'fdCreatorName',width:120">创建者</th>
+					<th data-options="field:'fdSaleName',width:120">销售员</th>
+					<th data-options="field:'fdHistorySaleName',width:120">曾经销售员</th>
+					<th data-options="field:'fdCreateTime',width:120">创建时间</th>
+					<th data-options="field:'fdUpdateTime',width:120">修改时间</th>
+					<th data-options="field:'fdIsRecommend',width:100">是否推介</th>
+					<th data-options="field:'fdCustomerType',width:100">顾客类型</th>
+					<th data-options="field:'fdSkinCode',width:100">肌肤问题</th>
+					<th data-options="field:'fdPostTime',width:100">推荐时间</th>
+					<th data-options="field:'fdMemo',width:100">备忘</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<div id="spread-dialog-inp" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
+		<form id="spread-form-inp" method="post">
+	        <table>
+		        <tr style="display:none">
+	                <td align="right">客户ID:</td>
+	                <td><input type="text" id="fdId" name="fdId" value="ddd"/></td>
+	            </tr>
+	       		<tr>
+	       			<td align="right">是否推介:</td>
+					<td>
+	                	<select id="fdIsRecommend" class="easyui-combobox" name="fdIsRecommend" style="width:200px;">   
+						    <option value="0">是</option>   
+						    <option value="1">否</option>   
+						</select>  
+	                </td>
+			 	</tr>
+	        </table>
+    	</form>
+	</div>
+</body>
+<script type="text/javascript">
+$('#spread-datagrid-inp').datagrid({
+	pagination: true,
+	pageSize: 15,
+	pageList: [10, 15, 20, 25, 30, 50, 100, 300, 500, 1000],
+	fit:true,
+	fitColumns:true,
+	singleSelect:true,
+	rownumbers:true,
+	loadFilter:pagerFilter,
+	url: getContextPath()+'/customer/selectBySelfId',  //获取数据地址
+	onDblClickCell: function(index,field,value){
+		var selectedRow = $(this).datagrid('getSelected');
+		 $("#fdId").val(selectedRow.fdId);
+		 $('#fdIsRecommend').combobox('setValue', selectedRow.fdIsRecommend);
+		$('#spread-dialog-inp').dialog({
+		closed: false,
+		modal:true,
+           title: "修改信息",
+           buttons: [{
+               text: '确定',
+               iconCls: 'icon-ok',
+               handler: editRecommend
+           }, {
+               text: '取消',
+               iconCls: 'icon-cancel',
+               handler: function () {
+                   $('#spread-dialog-inp').dialog('close');                    
+               }
+           }]
+       });
+	}
+});
+ 
+function editRecommend(){
+	$('#spread-form-inp').form('submit', {
+		url:getContextPath()+'/customer/updateRecommend',
+		success:function(data){
+            var tData = eval('(' + data + ')');
+            var flag = tData.flag;
+           	$.messager.alert('信息提示',tData.msg,'info');
+			if(flag == 'success') {
+           		$('#spread-dialog-inp').dialog('close');
+				selectBox();
+			}
+		}
+	});
+}
+
+function selectBox() {
+	$('#searchform').form('submit', {
+		url:getContextPath()+'/customer/selectSpreadBox',
+		success:function(data){
+			var tData=eval('(' + data + ')');
+			$('#spread-datagrid-inp').datagrid('loadData', tData);
+		}
+	});
+}
+</script>
+</html>

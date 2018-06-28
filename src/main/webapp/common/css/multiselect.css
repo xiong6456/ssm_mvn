@@ -1,0 +1,41 @@
+.github.ribbon {
+	position: fixed;
+	display: block;
+	top: 40px;
+	right: 0;
+	border: 0;
+	z-index: 1001;
+}
+
+.prettyprint {
+	padding: 10px!important;
+}
+
+#wrap {
+	padding-top: 0px;
+}
+
+#home h1 {
+	margin-bottom: 30px;
+}
+#demo,
+#examples,
+#support,
+#download {
+	padding-top: 40px;
+}
+select[multiple], select[size] {
+    height: 200px;
+}
+.btn{
+	padding: 6px 12px;
+    margin-bottom: 20px;
+}
+.btn-primary,.btn-default{
+	padding: 7px 12px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+}
+.mycontainer{
+	margin-left: 60px;
+}

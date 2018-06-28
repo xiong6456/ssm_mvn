@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>dialog</title>
+	<link rel="stylesheet" type="text/css" href="../resource/jquery-easyui-1.5.4.2/themes/default/easyui.css" />
+	<script type="text/javascript" src="../resource/jquery-easyui-1.5.4.2/jquery.min.js"></script>
+	<script type="text/javascript" src="../resource/jquery-easyui-1.5.4.2/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../common/js/pubfun.js"></script>
+</head>
+<body>
+	<style type="text/css">
+		ul{list-style:none;}
+		ul li{
+			cursor:pointer;
+			margin:4px;
+		}
+		.dialog{
+			margin:0;
+			padding:0;
+			box-sizing:border-box;
+			width:100%;
+			height:90%;
+			margin:0 auto;
+		}
+		.dialog div{
+			margin:0;
+			padding:0;
+			box-sizing:border-box;
+			position:relative;
+			width:49%;
+			float:left;
+			height:100%;
+			padding:10px;
+			
+		}
+		.dialog .dialog-selected{margin-top: 22px;}
+		.dialog-unselected ul,.dialog-selected ul{
+			overflow:auto;
+			height:250px;
+			border-right:1px solid #333;
+			border-bottom:1px solid #333;
+		}
+		.bg{
+			background:#e5e5e5;
+		}
+		.save-button{
+			position:relative;
+			left:30%;
+			margin:10px;
+		}
+		.button{
+			position:relative;
+			left:30%;
+			margin:10px;
+		}
+	</style>
+		<div class="dialog">
+			<form action="" id="searchUnSel" onsubmit="return false">
+				<div class="dialog-unselected">
+					<input type="text" name="fdName"/><button class="easyui-linkbutton" iconCls="icon-search" onclick="searchUnSel();">搜索</button>
+					<ul id="unsel"></ul>
+					<button class="button">确定</button>
+				</div>
+				<input type="hidden" name="fdRoleId" value="">
+			</form>
+			<form action="" id="saveData" onsubmit="return false">
+				<div class="dialog-selected">
+					<ul></ul>
+					<button class="save-button" onclick="saveData();">保存</button>
+					<button class="button">取消</button>
+				</div>
+				<input type="hidden" name="fdRoleId" value="">
+			</form>
+			
+		</div>
+		<script type="text/javascript">
+		
+		$.extend({
+			ajaxLoadJson:function(url,flag){
+				reLoadData(url,flag);
+			}
+		});
+		function initHeight(){
+			var h1 = $(".dialog-selected ul").height();
+			var h2 = $(".dialog-unselected ul").height();
+			if( h1> h2 ){
+				$(".dialog-selected ul").height(h1);
+				$(".dialog-unselected ul").height(h1);
+			}else {
+				$(".dialog-selected ul").height(h2);
+				$(".dialog-unselected ul").height(h2);
+			}
+		}
+		var loadJson = function (tData,flag){
+			if(flag){
+				for(var i = 0;i<tData.length;i++){
+					for(var j in tData[i]){
+						if(j =="fd_name"){
+							var ele = $("<li>"+tData[i][j]+"<input type='hidden' name='fdSelObjIds' value='"+tData[i]["fd_id"]+"'/></li>");
+							$(".dialog-selected ul").append(ele);
+						}
+					}
+				}
+			}else {
+				for(var i = 0;i<tData.length;i++){
+					for(var j in tData[i]){
+						if(j =="fd_name"){
+							var ele = $("<li>"+tData[i][j]+"<input type='hidden' name='fdSelObjIds' value='"+tData[i]["fd_id"]+"'/></li>");
+							$(".dialog-unselected ul").append(ele);
+						}
+					}
+				}
+			}
+			initHeight();
+		};
+		$.ajaxLoadJson(mSelectPath,true);
+		$.ajaxLoadJson(mUnSelectPath,false);
+		function reLoadData(urlpath,flag) {
+			
+			$(function(){
+				$.ajax({
+					url:urlpath,
+					type:'post',
+					data:mTranData,
+					dataType:'json',
+					async:false,
+					success:function(data){
+						loadJson(data,flag);
+					},
+					error:function(xhr,textStatus){
+					
+					}
+				});
+			});
+		}
+		$(".dialog-unselected ul").on("dblclick","li",function(){
+			$(".dialog-selected ul").append($(this).clone());
+			$(this).remove();
+		});
+		$(".dialog div ul").on("click","li",function(){
+			if($(this).hasClass('bg')){
+			
+				$(this).removeClass("bg");
+			}else {
+				$(this).addClass("bg");
+			}
+		});
+		$(".dialog-unselected .button").click(function(){
+			$(".dialog-unselected ul li").each(function(index,ele){
+				if($(ele).hasClass("bg")){
+					$(".dialog-selected ul").append($(ele));
+					$(".dialog-selected ul li").removeClass("bg");
+				}
+			});
+			initHeight();
+		});
+		$(".dialog-selected .button").click(function(){
+			$(".dialog-selected ul li").each(function(index,ele){
+				if($(ele).hasClass("bg")){
+					$(".dialog-unselected ul").append($(ele));
+					$(".dialog-unselected ul li").removeClass("bg");
+				}
+			});
+		});
+		
+		var contextPath = getContextPath();
+		
+		function saveData() {
+			document.getElementsByName("fdRoleId")[1].value = mTranData.substring(mTranData.indexOf("=")+1);
+
+			$.ajax({
+				type : "post",
+				async:false,
+				data:$("#saveData").serialize(),
+				dataType:'json',
+				url : mSavePath,
+				success : function(data) {
+					var tData = data;
+					var flag = tData.flag;
+					if (flag == 'success') {
+						$.messager.alert('信息提示', tData.msg, 'info');
+					} else {
+						$.messager.alert('错误提示', tData.msg, 'error');
+					}
+				}
+			});
+		}
+		
+		//搜索
+		function searchUnSel() {
+			document.getElementsByName("fdRoleId")[0].value = mTranData.substring(mTranData.indexOf("=")+1);
+
+			$.ajax({
+				type : "post",
+				async:false,
+				data:$("#searchUnSel").serialize(),
+				dataType:'json',
+				url : mSearchUnSelectPath,
+				success : function(data) {
+					$("#unsel").html("");
+					loadJson(data,false);
+				}
+			});
+		}
+	</script>
+</body>
+	
+</html>

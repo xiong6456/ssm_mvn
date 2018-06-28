@@ -1,0 +1,53 @@
+<script type="text/javascript" src="../common/js/pubfun.js"></script>
+<script type="text/javascript" src="../sys/shiro/roleinput.js"></script>
+
+<div class="easyui-layout" data-options="fit:true">
+    <!-- Begin of toolbar -->
+    <div id="role-toolbar-inp">
+        <div class="zero-toolbar-button">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="openAddRole()" plain="true">添加</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openEditRole()" plain="true">修改</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-cross" onclick="removeRole()" plain="true">删除</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-reload" onclick="reloadRole()" plain="true">刷新</a>
+        </div>
+        <form name="searchform" method="post" id ="searchform">
+		    <td style="width:30px;">
+		       <label>角色名：</label>
+		    	<input type="text" id="fdNameBox" name="fdName" class="easyui-textbox"
+                		data-options="prompt:'请输入角色名'" style="width:100px" />
+	            &nbsp;&nbsp;
+	            <label>描述：</label>
+	            <input class="easyui-textbox" id="fdDescriptionBox" name="fdDescriptionName" style="width:100px"
+	            		data-options="prompt:'请输入描述'"/>
+	            	<a id="submit_search" href="#" class="easyui-linkbutton" iconCls="icon-search">查询</a>
+			 </td>
+		 </form>
+    </div>
+    <!-- End of toolbar -->
+    <table id="role-datagrid-inp" class="easyui-datagrid" toolbar="#role-toolbar-inp"></table>
+</div>
+<!-- Begin of easyui-dialog -->
+<div id="role-dialog-inp" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
+	<form id="role-form-inp" method="post">
+        <table>
+        	<tr style="display:none">
+                <td align="right">角色ID:</td>
+                <td><input type="text" id="fdId" name="fdId"/></td>
+            </tr>
+            <tr>
+                <td align="right">角色编码:</td>
+                <td><input type="text" id="fdCode" name="fdCode" class="easyui-textbox" style="height:23px;width:200px"/></td>
+            </tr>
+            <tr>
+                <td align="right">角色名:</td>
+                <td><input type="text" id="fdName" name="fdName" class="easyui-textbox" style="height:23px;width:200px"/></td>
+            </tr>
+            <tr>
+                <td align="right">描述:</td>
+                <td><input type="text" id="fdDescription" name="fdDescription" class="easyui-textbox" data-options="multiline:true" style="height:60px;width:200px"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- End of easyui-dialog -->
+ <div id="role-adduser_dialog" class="easyui-dialog" data-options="closed:true,iconCls:'icon-application-side-contract'"></div>

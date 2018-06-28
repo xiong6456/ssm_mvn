@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript" src="../../common/js/pubfun.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="../../resource/jquery-easyui-1.5.4.2/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css"
+	href="../../resource/jquery-easyui-1.5.4.2/themes/icon.css" />
+<script type="text/javascript"
+	src="../../resource/jquery-easyui-1.5.4.2/jquery.min.js"></script>
+<script type="text/javascript"
+	src="../../resource/jquery-easyui-1.5.4.2/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="../../resource/jquery-easyui-1.5.4.2/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="./customerConfig.js"></script>
+</head>
+<body>
+        <form name="customerConfig" method="post" id ="customerConfig">
+		    <td height="30">
+		       <label>每日单次索取数量：</label>
+			   <input type="text" class="zero-text" style="height:23px"  id="dayAvg" name="dayAvg" />
+			   <label>每日索取数量上限：</label>
+			   <input type="text" class="zero-text" style="height:23px"  id="dayCount" name="dayCount"/>
+			   <label>被返回资料重新返回推荐时间：</label>
+			   <input type="text" class="zero-text" style="height:23px"  id="dayBack" name="dayBack"/>
+			   <a id="customerConfig_search" href="#" class="easyui-linkbutton"  iconCls="icon-search" onclick="submitCustomerConfig()">提交</a>
+		    </td>
+		 </form>
+</body>
+</html>

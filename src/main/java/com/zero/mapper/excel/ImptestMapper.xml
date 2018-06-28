@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zero.mapper.excel.ImptestMapper" >
+  <resultMap id="BaseResultMap" type="com.zero.pojo.excel.Imptest" >
+    <result column="fd_id" property="fdId" jdbcType="VARCHAR" />
+    <result column="fd_name" property="fdName" jdbcType="VARCHAR" />
+    <result column="fd_sex" property="fdSex" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    fd_id, fd_name, fd_sex
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zero.pojo.excel.ImptestExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from imptest
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.zero.pojo.excel.ImptestExample" >
+    delete from imptest
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zero.pojo.excel.Imptest" >
+    insert into imptest (fd_id, fd_name, fd_sex
+      )
+    values (#{fdId,jdbcType=VARCHAR}, #{fdName,jdbcType=VARCHAR}, #{fdSex,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zero.pojo.excel.Imptest" >
+    insert into imptest
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fdId != null" >
+        fd_id,
+      </if>
+      <if test="fdName != null" >
+        fd_name,
+      </if>
+      <if test="fdSex != null" >
+        fd_sex,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fdId != null" >
+        #{fdId,jdbcType=VARCHAR},
+      </if>
+      <if test="fdName != null" >
+        #{fdName,jdbcType=VARCHAR},
+      </if>
+      <if test="fdSex != null" >
+        #{fdSex,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zero.pojo.excel.ImptestExample" resultType="java.lang.Integer" >
+    select count(*) from imptest
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update imptest
+    <set >
+      <if test="record.fdId != null" >
+        fd_id = #{record.fdId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdName != null" >
+        fd_name = #{record.fdName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fdSex != null" >
+        fd_sex = #{record.fdSex,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update imptest
+    set fd_id = #{record.fdId,jdbcType=VARCHAR},
+      fd_name = #{record.fdName,jdbcType=VARCHAR},
+      fd_sex = #{record.fdSex,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+   <insert id="insertInfoBatch" parameterType="java.util.List">  
+	    insert into Imptest (fd_id, fd_name, fd_sex)  
+	    values  
+	    <foreach collection="list" item="item" index="index" separator=",">  
+	      (#{item.fdId}, #{item.fdName}, #{item.fdSex})
+	    </foreach>
+</insert>
+</mapper>

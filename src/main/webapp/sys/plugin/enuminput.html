@@ -1,0 +1,51 @@
+<script type="text/javascript" src="../common/js/pubfun.js"></script>
+<script type="text/javascript" src="../sys/plugin/enuminput.js"></script>
+<div class="easyui-layout" data-options="fit:true">
+    <!-- Begin of toolbar -->
+    <div id="enum-toolbar-inp">
+        <div class="zero-toolbar-button">
+            <a href="#" class="easyui-linkbutton" iconCls="icon-add" onclick="openAddEnum()" plain="true">添加</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-edit" onclick="openEditEnum()" plain="true">修改</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-cross" onclick="removeEnum()" plain="true">删除</a>
+            <a href="#" class="easyui-linkbutton" iconCls="icon-reload" onclick="reloadEnum()" plain="true">刷新</a>
+        </div>
+        <form name="searchform" method="post" id ="searchform">
+		    <td height="30">
+		       <label>枚举类型：</label>
+		    	<input type="text" id="codeTypeBox" name="codeType" class="easyui-textbox"
+                		data-options="prompt:'请输入枚举类型'" style="width:100px" />
+	            &nbsp;&nbsp;
+	            <label>枚举名称：</label>
+	            <input class="easyui-textbox" id="codeNameBox" name="codeName" style="width:100px"
+	            		data-options="prompt:'请输入枚举名称'"/>
+	            	<a id="submit_search" href="#" class="easyui-linkbutton" iconCls="icon-search">查询</a>
+			    </td>
+		  </form>
+    </div>
+    <!-- End of toolbar -->
+    <table id="enum-datagrid-inp" class="easyui-datagrid" toolbar="#enum-toolbar-inp"></table>
+</div>
+<!-- Begin of easyui-dialog -->
+<div id="enum-dialog-inp" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" style="width:400px; padding:10px;">
+	<form id="enum-form-inp" method="post">
+        <table>
+        	<tr style="display:none">
+                <td align="right">枚举ID:</td>
+                <td><input type="text" id="codeId" name="codeId"/></td>
+            </tr>
+        	<tr>
+                <td align="right">枚举类型:</td>
+                <td><input type="text" id="codeType" name="codeType" class="easyui-textbox" style="height:23px;width:200px"/></td>
+            </tr>
+        	<tr>
+                <td align="right">枚举名称 :</td>
+                <td><input type="text" id="codeName" name="codeName" class="easyui-textbox" style="height:23px;width:200px"/></td>
+            </tr>
+            <tr>
+                <td align="right">枚举描述 :</td>
+                <td><input type="text" id="codeDescription" name="codeDescription" class="easyui-textbox" style="height:23px;width:200px" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+<!-- End of easyui-dialog -->
